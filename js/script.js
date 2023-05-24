@@ -7,28 +7,26 @@
 let gridParent = document.getElementById('grid');
 let gridGeneratorDom = document.getElementById('gridGenerator');
 let gridSelect = document.getElementById('grid-select');
+let popup = document.querySelector('.pop-up');
 
 gridGeneratorDom.addEventListener('click', function(){
     gridParent.innerHTML = '';
-    gridGenerator(gridSelect.value, gridParent, 16);
+    gridGenerator(gridSelect.value, gridParent, 16, popup);
 });
 
-function gridGenerator(cellNumber, gridContainer, bombsNumber){
+function gridGenerator(cellNumber, gridContainer, bombsNumber, popupDom){
     let bombCells = randomIntArray(1, cellNumber, bombsNumber);
     console.log(bombCells);
-
     for (let i = 0; i < cellNumber; i++){
         let cell = document.createElement('div');
         cell.classList.add('cell');
-
+        cell.innerHTML = '<p>' + (i + 1) + '</p>';
         if (bombCells.includes(i + 1)){
-            cell.innerHTML = '<p>' + 'bomb' + '</p>';
             cell.addEventListener('click', function(){
                 this.classList.add('bomb');
-                console.log('you clicked on a bomb');
+                popupDom.style.transform = 'translateX(-50%) translateY(-50%)';2
             });
         } else {
-            cell.innerHTML = '<p>' + (i + 1) + '</p>';
             cell.addEventListener('click', function(){
                 this.classList.add('flower');
                 console.log('you clicked on ' + (i + 1));
