@@ -25,12 +25,10 @@ function generateGame(cellNumber, gridContainer, bombsNumber, documentWindow){
     let flowerCells = 0;
     let score = 0;
 
-
-    let cell;
     let bombCells = randomIntArray(1, cellNumber, bombsNumber);
     let bombArray = [];
     for (let i = 0; i < cellNumber; i++){
-        cell = document.createElement('div');
+        let cell = document.createElement('div');
         cell.classList.add('cell');
         cell.innerHTML = '<p>' + (i + 1) + '</p>';
         cell.style.width = 'calc(100% /' + Math.sqrt(cellNumber) + ')';
