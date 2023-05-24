@@ -15,8 +15,6 @@ gridGeneratorDom.addEventListener('click', function(){
 });
 
 function generateGame(cellNumber, gridContainer, bombsNumber, documentWindow){
-    let bombCells = randomIntArray(1, cellNumber, bombsNumber);
-
     let screenDarkDom = document.createElement('div');
     screenDarkDom.classList.add('screen-wrapper');
     documentWindow.appendChild(screenDarkDom);
@@ -27,43 +25,49 @@ function generateGame(cellNumber, gridContainer, bombsNumber, documentWindow){
     let flowerCells = 0;
     let score = 0;
 
+
+    let cell;
+    let bombCells = randomIntArray(1, cellNumber, bombsNumber);
+    let bombArray = [];
     for (let i = 0; i < cellNumber; i++){
-        let cell = document.createElement('div');
+        cell = document.createElement('div');
         cell.classList.add('cell');
         cell.innerHTML = '<p>' + (i + 1) + '</p>';
+        cell.style.width = 'calc(100% /' + Math.sqrt(cellNumber) + ')';
+        gridContainer.append(cell);
+
         let isCellClicked = false;
+
         if (bombCells.includes(i + 1)){
+            bombArray.push(cell);
             cell.addEventListener('click', function(){
-                if (isCellClicked === false){
-                    this.classList.add('bomb');
-                    document.querySelector('.screen-wrapper').style.width = '100vw';
-                    document.querySelector('.pop-up').style.transform = 'translateX(-50%) translateY(-50%)';
-                    gameResult.innerHTML = 'Game Over!';
-                    scoreDom.innerHTML = 'Your score is ' + score;
-                    isCellClicked = true;
-                };
+                document.querySelector('.screen-wrapper').style.width = '100vw';
+                document.querySelector('.pop-up').style.transform = 'translateX(-50%) translateY(-50%)';
+                gameResult.innerHTML = 'Game Over!';
+                scoreDom.innerHTML = 'Your score is ' + score;    
+                for (i = 0; i < bombArray.length; i++){
+                    bombArray[i].classList.add('bomb');
+                }
             });
         } else {
             cell.addEventListener('click', function flower(){
                 if (isCellClicked === false){
-                    cell.classList.add('flower');
-                    console.log('you clicked on ' + (i + 1));
+                    this.classList.add('flower');
                     if (flowerCells === (cellNumber - bombsNumber - 1)){
                         document.querySelector('.screen-wrapper').style.width = '100vw';
                         document.querySelector('.pop-up').style.transform = 'translateX(-50%) translateY(-50%)';
                         gameResult.innerHTML = 'You Won!';
-                        scoreDom.innerHTML = 'Your score is ' + (score + 100);
+                        scoreDom.innerHTML = 'Your score is ' + (score + 1000);
                     } else {
                         flowerCells++;
-                        score += 100;
+                        score += 1000;
                     }
                     isCellClicked = true;
                 }
             });
         }
-        cell.style.width = 'calc(100% /' + Math.sqrt(cellNumber) + ')';
-        gridContainer.append(cell);
     }
+
 };
 
 function createPopup(parent){
