@@ -8,26 +8,29 @@
     <title>Prato Fiorito</title>
 </head>
 <body>
-    <main>
-        <nav>
-            <h1>Prato Fiorito</h1>
-            <div class="wrapper">
-                <button id="gridGenerator">Gioca!</button>
-                <label for="grid-select">Imposta la difficolta:</label>
-                <select name="grids" id="grid-select">
-                    <option value="">--Scegli un formato--</option>
-                    <option value="49">7x7</option>
-                    <option value="81">9x9</option>
-                    <option value="100">10x10</option>
-                </select>
-            </div>
-        </nav>
-        <section id="grid"></section>
-        <section class="pop-up">
-            <h1 id="gameResult"></h1>
-            <button id="closeBtn">x</button>
-        </section>
-    </main>
+    <div id="document_wrapper">
+        <main>
+            <nav>
+                <h1>Prato Fiorito</h1>
+                <div class="wrapper">
+                    <button id="gridGenerator">Gioca!</button>
+                    <label for="grid-select">Imposta la difficolta:</label>
+                    <select name="grids" id="grid-select">
+                        <option value="">--Scegli un formato--</option>
+                        <option value="49">7x7</option>
+                        <option value="81">9x9</option>
+                        <option value="100">10x10</option>
+                    </select>
+                </div>
+            </nav>
+            <section id="grid"></section>
+            <section class="pop-up">
+                <h1 id="gameResult"></h1>
+                <button id="closeBtn">x</button>
+                <button id="playAgain">Gioca di nuovo!</button>
+            </section>
+        </main>
+    </div>
     <script src="./js/script.js"></script>
 </body>
 </html>
