@@ -10,24 +10,29 @@ let gridSelect = document.getElementById('grid-select');
 
 gridGeneratorDom.addEventListener('click', function(){
     gridParent.innerHTML = '';
-    gridGenerator(gridSelect.value, gridParent);
+    gridGenerator(gridSelect.value, gridParent, 16);
 });
 
-function gridGenerator(cellNumber, gridContainer){
+function gridGenerator(cellNumber, gridContainer, bombsNumber){
+    let bombCells = randomIntArray(1, cellNumber, bombsNumber);
+    console.log(bombCells);
     for (let i = 0; i < cellNumber; i++){
         let cell = document.createElement('div');
-        cell.innerHTML = '<p>' + (i + 1) + '</p>';
         cell.classList.add('cell');
+        if (bombCells.includes(i + 1)){
+            cell.innerHTML = '<p>' + 'bomb' + '</p>';
+        } else {
+            cell.innerHTML = '<p>' + (i + 1) + '</p>';
+        }
         cell.style.width = 'calc(100% /' + Math.sqrt(cellNumber) + ')';
         gridContainer.append(cell);
+
         cell.addEventListener('click', function(){
             cell.classList.toggle('active');
             console.log('you clicked on ' + (i + 1));
         });
     }
 };
-
-console.log(randomIntArray(1, 100, 16))
 
 function randomIntArray(min, max, times){
     if ((max - min) < times){
