@@ -82,6 +82,7 @@ nav{
     transition: all 1s ease-in-out;
     overflow: hidden;
     z-index: 2;
+    padding: 4rem 2rem;
 }
 
 #closeBtn{
