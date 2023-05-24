@@ -52,7 +52,21 @@ nav{
     font-size: 1.5rem;
 }
 
-.cell.active{
+.cell.bomb{
     background-color: red;
-    color: red;
+    color: transparent;
+    background-image: url(../assets/bomb.png);
+    background-size: contain;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+.cell.flower{
+    background-color: rgb(0, 255, 76);
+    color: transparent;
+    background-image: url(../assets/margherita.png);
+    background-size: contain;
+    background-position: center;
+    background-repeat: no-repeat;
+
 }
