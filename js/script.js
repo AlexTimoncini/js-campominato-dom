@@ -23,7 +23,6 @@ function generateGame(cellNumber, gridContainer, bombsNumber, documentWindow){
     let gameResult = document.getElementById('gameResult');
     let scoreDom = document.getElementById('score');
     let flowerCells = 0;
-    let score = 0;
 
     let bombCells = randomIntArray(1, cellNumber, bombsNumber);
     let bombArray = [];
@@ -34,35 +33,29 @@ function generateGame(cellNumber, gridContainer, bombsNumber, documentWindow){
         cell.style.width = 'calc(100% /' + Math.sqrt(cellNumber) + ')';
         gridContainer.append(cell);
 
-        let isCellClicked = false;
-
         if (bombCells.includes(i + 1)){
             bombArray.push(cell);
             cell.addEventListener('click', function(){
                 document.querySelector('.screen-wrapper').style.width = '100vw';
                 document.querySelector('.pop-up').style.transform = 'translateX(-50%) translateY(-50%)';
                 gameResult.innerHTML = 'Game Over!';
-                scoreDom.innerHTML = 'Your score is ' + score;    
+                scoreDom.innerHTML = 'Your score is ' + (flowerCells * 1000);    
                 for (i = 0; i < bombArray.length; i++){
                     bombArray[i].classList.add('bomb');
                 }
             });
         } else {
-            cell.addEventListener('click', function flower(){
-                if (isCellClicked === false){
+            cell.addEventListener('click', function(){
                     this.classList.add('flower');
                     if (flowerCells === (cellNumber - bombsNumber - 1)){
                         document.querySelector('.screen-wrapper').style.width = '100vw';
                         document.querySelector('.pop-up').style.transform = 'translateX(-50%) translateY(-50%)';
                         gameResult.innerHTML = 'You Won!';
-                        scoreDom.innerHTML = 'Your score is ' + (score + 1000);
+                        scoreDom.innerHTML = 'Your score is ' + (flowerCells * 1000);
                     } else {
                         flowerCells++;
-                        score += 1000;
                     }
-                    isCellClicked = true;
-                }
-            });
+            }, { once: true });
         }
     }
 
