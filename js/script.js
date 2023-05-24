@@ -16,11 +16,16 @@ gridGeneratorDom.addEventListener('click', function(){
 
 function generateGame(cellNumber, gridContainer, bombsNumber, documentWindow){
     let bombCells = randomIntArray(1, cellNumber, bombsNumber);
-    let flowerCells = 0;
+
     let screenDarkDom = document.createElement('div');
     screenDarkDom.classList.add('screen-wrapper');
     createPopup(documentWindow);
+
     let gameResult = document.getElementById('gameResult');
+    let scoreDom = document.getElementById('score');
+    let flowerCells = 0;
+    let score = 0;
+
     for (let i = 0; i < cellNumber; i++){
         let cell = document.createElement('div');
         cell.classList.add('cell');
@@ -30,7 +35,8 @@ function generateGame(cellNumber, gridContainer, bombsNumber, documentWindow){
                 this.classList.add('bomb');
                 documentWindow.appendChild(screenDarkDom);
                 document.querySelector('.pop-up').style.transform = 'translateX(-50%) translateY(-50%)';
-                gameResult.innerHTML = 'Game Over!'
+                gameResult.innerHTML = 'Game Over!';
+                scoreDom.innerHTML = 'Your score is' + score;
             });
         } else {
             cell.addEventListener('click', function flower(){
@@ -39,9 +45,11 @@ function generateGame(cellNumber, gridContainer, bombsNumber, documentWindow){
                 if (flowerCells === (cellNumber - bombsNumber - 1)){
                     documentWindow.appendChild(screenDarkDom);
                     document.querySelector('.pop-up').style.transform = 'translateX(-50%) translateY(-50%)';
-                    gameResult.innerHTML = 'You Won!'
+                    gameResult.innerHTML = 'You Won!';
+                    scoreDom.innerHTML = 'Your score is' + score;
                 } else {
                     flowerCells++;
+                    score += 100;
                 }
             });
         }
@@ -56,14 +64,17 @@ function createPopup(parent){
     parent.appendChild(popup);
     popup.innerHTML = `
         <h1 id="gameResult"></h1>
+        <h2 id="score"></h2>
         <button id="closeBtn">x</button>
         <button id="playAgain">Gioca di nuovo!</button>
     `;
+
     let closeBtn = document.getElementById('closeBtn');
     closeBtn.addEventListener('click', function(){
         popup.style.transform = 'translateX(-50%) translateY(-200%)';
         document.querySelector('.screen-wrapper').remove();
     });
+
     let playAgainBtn = document.getElementById('playAgain');
     playAgainBtn.addEventListener('click', function(){
         gridParent.innerHTML = '';
