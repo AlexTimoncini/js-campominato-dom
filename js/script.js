@@ -25,6 +25,7 @@ function generateGame(cellNumber, gridContainer, bombsNumber, documentWindow){
     let flowerCells = 0;
 
     let bombCells = randomIntArray(1, cellNumber, bombsNumber);
+    let bombArray = [];
     for (let i = 0; i < cellNumber; i++){
         let cell = document.createElement('div');
         cell.classList.add('cell');
@@ -33,13 +34,14 @@ function generateGame(cellNumber, gridContainer, bombsNumber, documentWindow){
         gridContainer.append(cell);
 
         if (bombCells.includes(i + 1)){
+            bombArray.push(cell);
             cell.addEventListener('click', function(){
                 document.querySelector('.screen-wrapper').style.width = '100vw';
                 document.querySelector('.pop-up').style.transform = 'translateX(-50%) translateY(-50%)';
                 gameResult.innerHTML = 'Game Over!';
                 scoreDom.innerHTML = 'Your score is ' + (flowerCells * 1000);    
-                for (x = 0; x < bombCells.length; x++){
-                    document.querySelectorAll('.cell')[bombCells[x]].classList.add('bomb');
+                for (i = 0; i < bombArray.length; i++){
+                    bombArray[i].classList.add('bomb');
                 }
             });
         } else {
