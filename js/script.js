@@ -25,7 +25,6 @@ function generateGame(cellNumber, gridContainer, bombsNumber, documentWindow){
     let flowerCells = 0;
 
     let bombCells = randomIntArray(1, cellNumber, bombsNumber);
-    let bombArray = [];
     for (let i = 0; i < cellNumber; i++){
         let cell = document.createElement('div');
         cell.classList.add('cell');
@@ -34,14 +33,13 @@ function generateGame(cellNumber, gridContainer, bombsNumber, documentWindow){
         gridContainer.append(cell);
 
         if (bombCells.includes(i + 1)){
-            bombArray.push(cell);
             cell.addEventListener('click', function(){
                 document.querySelector('.screen-wrapper').style.width = '100vw';
                 document.querySelector('.pop-up').style.transform = 'translateX(-50%) translateY(-50%)';
                 gameResult.innerHTML = 'Game Over!';
                 scoreDom.innerHTML = 'Your score is ' + (flowerCells * 1000);    
-                for (i = 0; i < bombArray.length; i++){
-                    bombArray[i].classList.add('bomb');
+                for (x = 0; x < bombCells.length; x++){
+                    document.querySelectorAll('.cell')[bombCells[x]].classList.add('bomb');
                 }
             });
         } else {
@@ -60,6 +58,23 @@ function generateGame(cellNumber, gridContainer, bombsNumber, documentWindow){
     }
 
 };
+
+function showAdjacent(position){
+    if ((position > 11) && (position < 90) && (!position.toString().includes(0)) && (!position.toString()[1].includes(1))){
+        return [(position - 1), (position + 1), (position - 11), (position - 10), (position - 9), (position + 11), (position + 10), (position + 9)];
+    } else if (position > 1 && position < 10){
+        return [(position - 1), (position + 1), (position + 11), (position + 10), (position + 9)];
+    } else if (position > 91 && position < 100) {
+        return [(position - 1), (position + 1), (position - 11), (position - 10), (position - 9)];
+    } else if (position === 1 || position ===  10 || position ===  91 || position ===  100){
+        return [position];
+    } else if (position.toString().includes(0)) {
+        return [(position - 1), (position + 10), (position - 11), (position - 10), (position + 9)];
+    } else {
+        return [(position + 1), (position + 10), (position + 11), (position - 10), (position - 9)];
+    }
+}
+
 
 function createPopup(parent){
     let popup = document.createElement('div');
@@ -86,7 +101,7 @@ function createPopup(parent){
         document.querySelector('.screen-wrapper').style.width = '0';
         generateGame(gridSelect.value, gridParent, 16, windowDom);
     });
-}
+};
 
 function randomIntArray(min, max, times){
     if ((max - min) < times){
@@ -100,5 +115,5 @@ function randomIntArray(min, max, times){
         }
     }
     return array;
-}
+};
 
